@@ -208,19 +208,19 @@
     </div>
 </div>
 
-<!-- HOT! or For You section -->
+<!-- HOT! section -->
 <section class="hot-section">
     <h3>HOT!</h3>
     <div class="items" id="hot-items"></div>
 </section>
 
-<!-- Must-have offers -->
+<!-- all offers -->
 <section class="section">
     <h2>All Offers</h2>
     <div class="items" id="shop-items"></div>
 </section>
 
-<!-- Popup for item details -->
+<!-- iframe popup -->
 <div id="popup" class="popup">
     <iframe id="popup-iframe"></iframe>
 </div>
@@ -228,20 +228,20 @@
 <script>
 const itemsData = [
     { name: 'Pear Blocks For survival 2222', category: 'Fruit' },
-    { name: 'Apple', category: 'Fruit' },
+    { name: 'Plum Blocks for Survival 2222', category: 'Fruit' },
+    { name: 'Cherry Blocks for Survival 2222', category: 'Fruit' },
     { name: 'Rice For survival 2222', category: 'Crops' },
-    { name: 'Tomato', category: 'Vegetable' },
-    // Add more items as necessary
+    //  no .html and add a new line for each one
 ];
 
-const hotItems = ['Pear Blocks For survival 2222', 'Apple']; // Hot item filenames
+const hotItems = ['Pear Blocks For survival 2222', 'Cherry Blocks for Survival 2222']; // Hot item filenames //  no .html and add a new line for each one
 const allItems = [...itemsData];
 
 async function fetchItems() {
     const itemContainer = document.getElementById('shop-items');
     const hotContainer = document.getElementById('hot-items');
 
-    // Fetch HOT! items
+  
     for (const itemName of hotItems) {
         try {
             let response = await fetch(`items/${itemName}.html`);
