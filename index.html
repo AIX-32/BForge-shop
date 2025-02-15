@@ -5,7 +5,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>BForge Market</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link rel="manifest" href="/manifest.json">
     <style>
         :root {
             --primary: #FFA726;
@@ -324,28 +323,6 @@ if ('serviceWorker' in navigator) {
         .then(() => console.log('Service Worker registered'))
         .catch(error => console.log('Service Worker registration failed:', error));
 }
-
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (event) => {
-
-    event.preventDefault();
-    
-
-    deferredPrompt = event;
-
-
-    setTimeout(() => {
-        deferredPrompt.prompt();
-
-        deferredPrompt.userChoice.then(choiceResult => {
-            console.log(choiceResult.outcome === 'accepted' ? 'User accepted PWA install' : 'User dismissed PWA install');
-            deferredPrompt = null; 
-        });
-    }, 1000); 
-});
-
-
 
 fetchItems();
 </script>
