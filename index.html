@@ -241,11 +241,13 @@
         color: var(--text-primary);
         font-size: 0.9rem;
         cursor: pointer;
-        transition: background 0.3s;
+        transition: transform 0.3s ease, background-color 0.3s ease, border-radius 0.3s ease;
     }
 
     .category:hover {
         background-color: var(--surface-hover);
+        border-radius: 5px;
+       transform: translateX(6px);
     }
     </style>
 </head>
@@ -376,7 +378,7 @@ function openPopup(itemName) {
 }
 
     function generateCategories() {
-        const categories = [...new Set(itemsData.map(item => item.category))]; // Get unique categories
+        const categories = [...new Set(itemsData.map(item => item.category))]; 
         const categoryList = document.getElementById('category-list');
 
         categories.forEach(category => {
@@ -392,6 +394,15 @@ function openPopup(itemName) {
         document.querySelectorAll('#shop-items .item').forEach(item => {
             item.style.display = item.dataset.category === category ? 'block' : 'none';
         });
+        
+          
+    const sectionTitle = document.querySelector('.section h2');
+    sectionTitle.textContent = category; 
+
+    
+    document.querySelectorAll('#shop-items .item').forEach(item => {
+        item.style.display = item.dataset.category === category ? 'block' : 'none';
+    });
     }
 
     generateCategories();
