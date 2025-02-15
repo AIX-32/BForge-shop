@@ -325,6 +325,40 @@ if ('serviceWorker' in navigator) {
         .catch(error => console.log('Service Worker registration failed:', error));
 }
 
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+    
+    // Create a button to trigger the prompt
+    let installButton = document.createElement('button');
+    installButton.innerText = 'Install BloxdForge';
+    installButton.style.position = 'fixed';
+    installButton.style.bottom = '20px';
+    installButton.style.right = '20px';
+    installButton.style.padding = '10px 20px';
+    installButton.style.backgroundColor = '#ff8c00';
+    installButton.style.color = 'white';
+    installButton.style.border = 'none';
+    installButton.style.borderRadius = '5px';
+    installButton.style.cursor = 'pointer';
+    
+    installButton.addEventListener('click', () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(choiceResult => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted PWA install');
+            } else {
+                console.log('User dismissed PWA install');
+            }
+            deferredPrompt = null;
+        });
+    });
+
+    document.body.appendChild(installButton);
+});
+
 
 fetchItems();
 </script>
