@@ -141,7 +141,7 @@
         /* HOT! section */
         .hot-section {
             background: linear-gradient(135deg, #FFA72622 0%, #FF980022 100%);
-            margin: 2rem 0;
+            margin: 3rem 0;
             padding: 2rem;
             border-top: 2px solid var(--primary);
             border-bottom: 2px solid var(--primary);
@@ -201,6 +201,52 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+    /* Sidebar Button */
+    .sidebar {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        background-color: #1E1E1E;
+        width: 240px;
+        height: 40px;
+        padding: 10px;
+        border-radius: 0 8px 8px 0;
+
+        transition: height 1.5s ease;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        z-index: 101;
+    }
+
+    /* Expand on Hover */
+    .sidebar:hover {
+
+        height: 100%;
+        padding: 10px;
+    }
+
+.sidebar h3 {
+    color: var(--primary);
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    text-align: center; /* Centers the text */
+}
+
+
+    .category {
+        display: block;
+        padding: 5px;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .category:hover {
+        background-color: var(--surface-hover);
+    }
     </style>
 </head>
 <body>
@@ -217,6 +263,14 @@
     </div>
 </div>
 
+<!-- Sidebar -->
+<div class="sidebar" id="category-sidebar">
+    <h3>Categories</h3>
+    <div id="category-list"></div>
+</div>
+
+<div class="content">
+  
 <!-- HOT! section -->
 <section class="hot-section">
     <h3>HOT!</h3>
@@ -321,18 +375,27 @@ function openPopup(itemName) {
     popup.style.display = "flex";
 }
 
-document.getElementById('popup').addEventListener("click", function(event) {
-    if (event.target === this) {
-        this.style.display = "none";
+    function generateCategories() {
+        const categories = [...new Set(itemsData.map(item => item.category))]; // Get unique categories
+        const categoryList = document.getElementById('category-list');
+
+        categories.forEach(category => {
+            const categoryElement = document.createElement('div');
+            categoryElement.textContent = category;
+            categoryElement.classList.add('category');
+            categoryElement.onclick = () => filterByCategory(category);
+            categoryList.appendChild(categoryElement);
+        });
     }
-});
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-        .then(() => console.log('Service Worker registered'))
-        .catch(error => console.log('Service Worker registration failed:', error));
-}
+    function filterByCategory(category) {
+        document.querySelectorAll('#shop-items .item').forEach(item => {
+            item.style.display = item.dataset.category === category ? 'block' : 'none';
+        });
+    }
 
+    generateCategories();
+    
 fetchItems();
 </script>
 
